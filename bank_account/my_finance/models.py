@@ -22,18 +22,11 @@ class User(AbstractUser):
     )
     
     phone = models.CharField(max_length=25, blank=True, null=True)
-
-    class Meta:
-        # Указываем, что это новая модель пользователя
-        swappable = 'AUTH_USER_MODEL'
-
-class UserProfile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    surname = models.CharField(max_length=25)
-    name = models.CharField(max_length=25)
-    lastname = models.CharField(max_length=25)
     currency = models.CharField(max_length=3, default='RUB')
     balance = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    class Meta:
+        # Указываем, что это новая модель пользователя
+        swappable = 'AUTH_USER_MODEL'    
     
 class Category(models.Model):
     name = models.CharField(max_length=50)

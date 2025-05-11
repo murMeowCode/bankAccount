@@ -18,10 +18,9 @@ from django.urls import path
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
-from my_finance.views import ProfileViewSet, UserViewSet
+from my_finance.views import UserViewSet
 
 router = DefaultRouter()
-router.register(r'profile', ProfileViewSet, basename='profile')
 router.register(r'users',UserViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
