@@ -8,8 +8,14 @@ from .permissions import IsAdminOrOwner
 
 class UserViewSet(ModelViewSet):
     permission_classes = [IsAdminOrOwner]
-    queryset = User.objects.all()
     serializer_class = UserSerializer
+    
+    def get_queryset(self):
+        # Фильтруем queryset в зависимости от прав пользователя
+        queryset = User.objects.all()
+        if not self.request.user.is_staff:
+            queryset = queryset.filter(id=self.request.user.id)
+        return queryset
     
 class TransactionAPIView(ListCreateAPIView):
     permission_classes = [IsAuthenticated]

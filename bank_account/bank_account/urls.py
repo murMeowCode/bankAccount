@@ -21,7 +21,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from my_finance.views import UserViewSet, TransactionAPIView
 
 router = DefaultRouter()
-router.register(r'users',UserViewSet)
+router.register(r'users',UserViewSet,basename='users')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/token/',TokenObtainPairView.as_view(),name='TokenObtain'),
