@@ -42,7 +42,7 @@ class Transaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Добавил связь с пользователем
     value = models.DecimalField(max_digits=12, decimal_places=2)
     date = models.DateTimeField(auto_now=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     type = models.CharField(max_length=10, choices=TYPE_CHOICES)  # Добавил поле типа транзакции
     
     def __str__(self):

@@ -18,7 +18,7 @@ from django.urls import path
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
-from my_finance.views import UserViewSet
+from my_finance.views import UserViewSet, TransactionAPIView
 
 router = DefaultRouter()
 router.register(r'users',UserViewSet)
@@ -26,7 +26,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/token/',TokenObtainPairView.as_view(),name='TokenObtain'),
     path('api/token/refresh/',TokenRefreshView.as_view(),name='TokenRefresh'),
-    path('api/token/verify/',TokenVerifyView.as_view(),name='TokenVerify')
+    path('api/token/verify/',TokenVerifyView.as_view(),name='TokenVerify'),
+    path('api/transaction/',TransactionAPIView.as_view(), name='transaction-list')
 ]
 
 urlpatterns += router.urls

@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
-from .models import  User
+from .models import User, Transaction
 
         
 class UserSerializer(ModelSerializer):
@@ -26,3 +26,21 @@ class UserSerializer(ModelSerializer):
             instance.set_password(password)  # хеширование пароля при обновлении
         instance.save()
         return instance
+     
+class TransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Transaction
+        fields = '__all__'
+        read_only_fields = ('user', 'date')
+
+    def validate(self, data):
+        """
+        Проверяем, что у пользователя достаточно средств для расходной операции
+        """
+        if data.get('type') == Transaction.OUTCOME:
+            user = self.context['request'].user
+            if user.balance < data.get('value', 0):
+                raise serializers.ValidationError(
+                    "Недостаточно средств на балансе для этой операции"
+                )
+        return data
