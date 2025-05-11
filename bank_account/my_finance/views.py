@@ -26,7 +26,10 @@ class TransactionAPIView(ListCreateAPIView):
     serializer_class = TransactionSerializer
     
     def get_queryset(self):
-        return Transaction.objects.filter(user=self.request.user)
+        if not self.request.user.is_staff:
+            return Transaction.objects.filter(user=self.request.user)
+        else:
+            return Transaction.objects.all()
     
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
