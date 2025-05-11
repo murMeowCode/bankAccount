@@ -17,6 +17,10 @@ class UserViewSet(ModelViewSet):
             queryset = queryset.filter(id=self.request.user.id)
         return queryset
     
+    def perform_create(self, serializer):
+        if self.request.user.is_staff:
+            serializer.save(user=self.request.user)
+    
 class TransactionAPIView(ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = TransactionSerializer
